@@ -1,84 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Star Sports Popup Player</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>filmyfly4wap.site</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: #161616;
-        font-family: Arial, sans-serif;
-        color: white;
-    }
+body{
+  margin:0;
+  background:#161616;
+  font-family:Arial,sans-serif;
+  color:#fff;
+}
 
-    h2 { 
-        background: #121212;
-        padding: 10px 10px 10px 20px;
-        font-size: 20px; 
-        margin-bottom: 20px; 
-    }
+h2{
+  background:#121212;
+  padding:10px 20px;
+  font-size:20px;
+}
 
-    /* Anchor ko block banakar DIV jaisa banaya */
-    a.item {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        padding: 20px 10px;
-        border-bottom: 1px solid #555;
-        cursor: pointer;
-        text-decoration: none;      /* underline remove */
-        color: white;               /* pure white text */
-    }
+.item{
+  width:100%;
+  background:none;
+  border:none;
+  border-bottom:1px solid #555;
+  padding:20px 10px;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+}
 
-    .item-icon {
-        width: 0;
-        border-left: 8px solid white;
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        margin-right: 15px;
-        margin-left: 10px;
-    }
+.item-icon{
+  width:0;
+  border-left:8px solid #fff;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  margin:0 15px 0 10px;
+}
 
-    .title {
-        font-size: 15px;
-        font-weight: bold;
-        color: #fff;
-        display: flex;
-        gap: 6px;
-    }
+.title{font-size:15px;font-weight:bold;}
+.link-text{color:#2962ff;font-size:14px;margin-top:5px;}
 
-    .link-text { 
-        color: #2962ff; 
-        font-size: 15px; 
-        margin-top: 5px; 
-    }
+/* POPUP */
+#videoPopup{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:#000;
+  display:none;
+  z-index:9999;
+}
+
+.popup-content{
+  width:100%;
+  height:100%;
+}
+
+.popup-content iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
 </style>
 </head>
 
 <body>
 
-<h2>filmyfly4wap.site</h2>
+<h2>All</h2>
 
-<!-- English 1 -->
-<a class="item" href="https://crickcast-zeecinema.vercel.app/">
-    <div class="item-icon"></div>
-    <div>
-        <div class="title">English 1 (WORLDWIDE)</div>
-        <div class="link-text">Link</div>
-    </div>
-</a>
+<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/player/wpl.html')">
+  <div class="item-icon"></div>
+  <div>
+    <div class="title">HINDI 1</div>
+    <div class="link-text">Play</div>
+  </div>
+</button>
 
-<!-- English 2 -->
-<a class="item" href="https://crickcast-zeecinema.vercel.app/">
-    <div class="item-icon"></div>
-    <div>
-        <div class="title">English 2 (WORLDWIDE)</div>
-        <div class="link-text">Link</div>
-    </div>
-</a>
+<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/player/INDvsNZ.html')">
+  <div class="item-icon"></div>
+  <div>
+    <div class="title">HINDI 2</div>
+    <div class="link-text">Play</div>
+  </div>
+</button>
+
+<!-- FULLSCREEN PLAYER -->
+<div id="videoPopup">
+  <div class="popup-content" id="popupBox">
+    <iframe id="videoFrame" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+function openPlayer(url){
+  const popup = document.getElementById("videoPopup");
+  const frame = document.getElementById("videoFrame");
+  const box = document.getElementById("popupBox");
+
+  frame.src = url;
+  popup.style.display = "block";
+
+  // 🔥 AUTO FULLSCREEN
+  if (box.requestFullscreen) box.requestFullscreen();
+  else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
+  else if (box.msRequestFullscreen) box.msRequestFullscreen();
+}
+
+// EXIT FULLSCREEN = PLAYER CLOSE
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) closePlayer();
+});
+
+function closePlayer(){
+  document.getElementById("videoFrame").src="";
+  document.getElementById("videoPopup").style.display="none";
+}
+</script>
 
 </body>
 </html>
