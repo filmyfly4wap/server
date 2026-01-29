@@ -1,1 +1,206 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cricketlive.site & filmyfly4wap.site</title>
+
+<style>
+body{
+  margin:0;
+  background:#161616;
+  font-family:Arial,sans-serif;
+  color:#fff;
+}
+
+h2{
+  box-shadow:0 8px 20px -10px rgba(0,0,0,0.6);
+  padding:10px 20px;
+  font-size:20px;
+}
+
+/* LIST ITEMS */
+.item{
+  width:100%;
+  background:none;
+  border:none;
+  border-bottom:1px solid #555;
+  padding:20px 10px;
+  display:flex;
+  align-items:center;
+  cursor:pointer;
+}
+
+.item-icon{
+  width:0;
+  border-left:8px solid #fff;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  margin:0 15px 0 10px;
+}
+
+.title{
+  color:#eee;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.link-text{
+  color:#2962ff;
+  font-size:14px;
+  margin-top:5px;
+}
+
+/* POPUP PLAYER */
+#videoPopup{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  display:none;
+  z-index:9999;
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+  position:fixed;
+  top:17px;
+  right:15px;
+  z-index:10000;
+  background:#2962ff;
+  color:#fff;
+  border:2px solid #fff;
+  font-size:22px;
+  width:37px;
+  height:37px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.popup-content{
+  width:100%;
+  height:100%;
+}
+
+.popup-content iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+/* TOAST */
+#toast{
+  
+  position:fixed;
+  bottom:25px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#ff3d00;
+  color:#fff;
+  padding:10px 10px;
+  border-radius:70px;
+  font-size:14px;
+  text-align: center;
+  font-weight: bold;
+  display:none;
+  z-index:11000;
+  animation:slideUp 0.2s ease;
+}
+
+@keyframes slideUp{
+  from{opacity:0; transform:translate(-50%,30px);}
+  to{opacity:1; transform:translate(-50%,0);}
+}
+</style>
+</head>
+
+<body>
+
+<h2>cricketlive.site</h2>
+
+<button class="item" onclick="openPlayer('')">
+  <div class="item-icon"></div>
+  <div>
+    <div class="title">HINDI</div>
+    <div class="link-text">Play</div>
+  </div>
+</button>
+
+<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/player/INDvsNZ-Eng1.html')">
+  <div class="item-icon"></div>
+  <div>
+    <div class="title">English 1</div>
+    <div class="link-text">Play</div>
+  </div>
+</button>
+
+<button class="item" onclick="openPlayer('https://filmyfly4wap.github.io/player/INDvsNZ-Eng2.html')">
+  <div class="item-icon"></div>
+  <div>
+    <div class="title">English 2</div>
+    <div class="link-text">Play</div>
+  </div>
+</button>
+
+<!-- POPUP PLAYER -->
+<div id="videoPopup">
+  <button class="close-btn" onclick="closePlayer()">✕</button>
+  <div class="popup-content" id="popupBox">
+    <iframe id="videoFrame" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast">Live Stream url abhi available nahi hai</div>
+
+<script>
+function showToast(msg){
+  const toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.style.display = "block";
+
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 3000);
+}
+
+function openPlayer(url){
+  if(!url || url.trim() === ""){
+    showToast("Live Stream url abhi available nahi hai");
+    return;
+  }
+
+  const popup = document.getElementById("videoPopup");
+  const frame = document.getElementById("videoFrame");
+  const box = document.getElementById("popupBox");
+
+  frame.src = url;
+  popup.style.display = "block";
+
+  if (box.requestFullscreen) box.requestFullscreen();
+  else if (box.webkitRequestFullscreen) box.webkitRequestFullscreen();
+  else if (box.msRequestFullscreen) box.msRequestFullscreen();
+}
+
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement) closePlayer();
+});
+
+function closePlayer(){
+  const popup = document.getElementById("videoPopup");
+  const frame = document.getElementById("videoFrame");
+
+  frame.src = "";
+  popup.style.display = "none";
+
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+}
+</script>
+
+</body>
+</html>
